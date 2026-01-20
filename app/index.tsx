@@ -1,17 +1,123 @@
 import Colors from "@/services/Colors";
-import { useNavigation } from "expo-router";
-import { useEffect } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { useRouter, useNavigation } from "expo-router";
+import React, { useCallback, useEffect } from "react";
+import * as WebBrowser from 'expo-web-browser';
+import * as AuthSession from 'expo-auth-session';
+import { Image, StyleSheet, Text, View, Button, Platform, TouchableOpacity} from 'react-native';
+import { useSSO, useUser } from "@clerk/clerk-expo";
+import { StatusBar } from "expo-status-bar";
+import { axiosClient } from "@/services/GlobalApi";
+
+
+// Preloads the browser for Android devices to reduce authentication load time
+export const useWarmUpBrowser = () => {
+  useEffect(() => {
+    if (Platform.OS !== 'android') return
+    void WebBrowser.warmUpAsync()
+    return () => {
+      // Cleanup: closes browser when component unmounts
+      void WebBrowser.coolDownAsync()
+    }
+  }, [])
+}
+
+
+// Handle any pending authentication sessions
+WebBrowser.maybeCompleteAuthSession()
+
+
+
 
 export default function Index() {
+  useWarmUpBrowser()
+  
+  // Use the `useSSO()` hook to access the `startSSOFlow()` method
+  const { startSSOFlow } = useSSO()
 
   const navigation = useNavigation();
+  const router = useRouter();
+  const {user} = useUser();
+  console.log("Current User:", user);
+
 
   useEffect (() =>{
     navigation.setOptions({
       headerShown:false
     })
   }, [])
+
+
+useEffect ( () => {
+  user && CreateNewUser();
+}, [user])
+
+
+const CreateNewUser = async () =>{
+  try{
+    const response = await axiosClient.post('/user-lists', {
+      data: {
+        fullName: user?.fullName,
+        email:user?.primaryEmailAddress?.emailAddress
+      }
+    })
+
+    console.log("User created successfully:", response.data);
+  }catch (e) {
+    console.log(e)
+  }
+}
+
+  
+const onPress = useCallback(async () => {
+ 
+    try {
+
+     const redirectUrl = AuthSession.makeRedirectUri({
+        scheme: "businessdirectoryapp",
+        path: "sso-callback"
+      }) 
+
+       console.log("Redirect URL:", redirectUrl);
+
+      // Start the authentication process by calling `startSSOFlow()`
+      const { createdSessionId, setActive, signIn, signUp } = await startSSOFlow({
+        strategy: 'oauth_google',
+        // For web, defaults to current path
+        // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
+        // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
+        redirectUrl,
+      })
+
+      // If sign in was successful, set the active session
+      if (createdSessionId) {
+        setActive!({
+          session: createdSessionId,
+          // Check for session tasks and navigate to custom UI to help users resolve them
+          // See https://clerk.com/docs/guides/development/custom-flows/overview#session-tasks
+          navigate: async ({ session }) => {
+            if (session?.currentTask) {
+              console.log(session?.currentTask)
+
+              // navigate to Home screen after successful sign in
+              router.push('/')
+              return
+            }
+            // No session tasks, navigate to the main app
+            router.push('/')
+          },
+        })
+      } else {
+        // If there is no `createdSessionId`,
+        // there are missing requirements, such as MFA
+        // See https://clerk.com/docs/guides/development/custom-flows/authentication/oauth-connections#handle-missing-requirements
+      }
+    } catch (err) {
+      // See https://clerk.com/docs/guides/development/custom-flows/error-handling
+      // for more info on error handling
+      console.error(JSON.stringify(err, null, 2))
+    }
+  }, [])
+
 
   return (
     <View
@@ -30,17 +136,18 @@ export default function Index() {
       >
         <Text style={{fontFamily:'appFontSemiBold', textAlign:'center', fontSize:15}}>Discover thousands of local businesses in one place.</Text>
 
-        <View style ={[styles.button, {display:'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap:10}]}>
+        <TouchableOpacity onPress ={onPress} style ={[styles.button, {display:'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap:10}]}>
           <Image source={require('../assets/images/google.png')}
           style={{width:20, height:20}}
           />
         <Text style={{fontFamily:'appFontSemiBold', textAlign:'center', fontSize:15}}>Sign In With Google</Text>
-      </View>
+      </TouchableOpacity> 
+
         <View style ={[styles.button, {backgroundColor:Colors.PRIMARY}]}>
         <Text style={{fontFamily:'appFontSemiBold', textAlign:'center', fontSize:15, color:'white'}}>Skip</Text>
       </View>
       </View>
-
+    <StatusBar hidden/>
     </View>
   );
 }

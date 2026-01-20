@@ -1,6 +1,8 @@
 import { Stack } from "expo-router";
 import {useFonts} from 'expo-font'
 import { ActivityIndicator } from "react-native";
+import { ClerkProvider } from '@clerk/clerk-expo'
+
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -15,5 +17,10 @@ export default function RootLayout() {
     return <ActivityIndicator />
   }
 
-  return <Stack />;
+  return (
+  <ClerkProvider>
+    <Stack />
+  </ClerkProvider>
+  
+);
 }
