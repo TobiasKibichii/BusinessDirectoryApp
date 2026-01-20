@@ -62,8 +62,11 @@ const CreateNewUser = async () =>{
     })
 
     console.log("User created successfully:", response.data);
+
+    router.push('/(tabs)/Home')
   }catch (e) {
     console.log(e)
+    router.push('/(tabs)/Home')
   }
 }
 
@@ -72,12 +75,12 @@ const onPress = useCallback(async () => {
  
     try {
 
-     const redirectUrl = AuthSession.makeRedirectUri({
+     /* const redirectUrl = AuthSession.makeRedirectUri({
         scheme: "businessdirectoryapp",
         path: "sso-callback"
       }) 
 
-       console.log("Redirect URL:", redirectUrl);
+       console.log("Redirect URL:", redirectUrl); */
 
       // Start the authentication process by calling `startSSOFlow()`
       const { createdSessionId, setActive, signIn, signUp } = await startSSOFlow({
@@ -85,7 +88,8 @@ const onPress = useCallback(async () => {
         // For web, defaults to current path
         // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
         // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
-        redirectUrl,
+        redirectUrl:AuthSession.makeRedirectUri(),
+
       })
 
       // If sign in was successful, set the active session
