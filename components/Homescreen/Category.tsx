@@ -3,7 +3,7 @@ import { axiosClient } from '@/services/GlobalApi'
 import { useEffect, useState } from 'react';
 import { Image, View, Text, FlatList, TouchableOpacity } from 'react-native'
 
-type categoryType = {
+export type categoryType = {
     name:string
     premium:boolean
     icon:{url:string}
