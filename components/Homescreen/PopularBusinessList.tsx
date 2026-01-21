@@ -5,7 +5,7 @@ import { Image, View, Text, ActivityIndicator, FlatList, ScrollView } from 'reac
 import { categoryType } from './Category';
 
 
-type BusinessType ={
+export type BusinessType ={
   name:string,
   address:string,
   email:string,
@@ -102,7 +102,7 @@ export default function PopularBusinessList() {
                   alignItems:'center',
                   gap:5,
                   marginTop:5
-                }}> <Image source={require('../../assets/images/star.png')}  style={{
+                }}><Image source={require('../../assets/images/star.png')}  style={{
                   width:20,
                   height:20
                 }}/>

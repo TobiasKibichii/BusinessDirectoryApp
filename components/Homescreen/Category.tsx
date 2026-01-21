@@ -1,5 +1,6 @@
 import Colors from '@/services/Colors';
 import { axiosClient } from '@/services/GlobalApi'
+import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Image, View, Text, FlatList, TouchableOpacity } from 'react-native'
 
@@ -10,6 +11,8 @@ export type categoryType = {
 }
 
 export default function Category() {
+
+  const router= useRouter();
 
   const [categoryList, setCategoryList] = useState<categoryType[]>([])
 
@@ -57,7 +60,14 @@ export default function Category() {
                 height:95,
                 borderRadius:10,
                 justifyContent:'center'
-            }}> 
+            }}
+             onPress={() =>  router.push({
+               pathname:'/businessList',
+               params:{
+                categoryName:item?.name
+               }
+             })}
+            > 
                 <Image 
                     source={{uri: item?.icon?.url}}
                     style={{
