@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import {useFonts} from 'expo-font'
 import { ActivityIndicator } from "react-native";
 import { ClerkProvider } from '@clerk/clerk-expo'
+import Toast from 'react-native-toast-message';
 
 
 export default function RootLayout() {
@@ -20,6 +21,7 @@ export default function RootLayout() {
   return (
   <ClerkProvider>
     <Stack screenOptions={{headerShown:false}} />
+    <Toast />
   </ClerkProvider>
   
 );

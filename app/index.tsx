@@ -103,11 +103,11 @@ const onPress = useCallback(async () => {
               console.log(session?.currentTask)
 
               // navigate to Home screen after successful sign in
-              router.push('/')
+              router.push('/(tabs)/Home')
               return
             }
             // No session tasks, navigate to the main app
-            router.push('/')
+            router.push('/(tabs)/Home')
           },
         })
       } else {
@@ -140,16 +140,16 @@ const onPress = useCallback(async () => {
       >
         <Text style={{fontFamily:'appFontSemiBold', textAlign:'center', fontSize:15}}>Discover thousands of local businesses in one place.</Text>
 
-        <TouchableOpacity onPress ={onPress} style ={[styles.button, {display:'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap:10}]}>
+        <TouchableOpacity onPress ={() => onPress()} style ={[styles.button, {display:'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap:10}]}>
           <Image source={require('../assets/images/google.png')}
           style={{width:20, height:20}}
           />
         <Text style={{fontFamily:'appFontSemiBold', textAlign:'center', fontSize:15}}>Sign In With Google</Text>
       </TouchableOpacity> 
 
-        <View style ={[styles.button, {backgroundColor:Colors.PRIMARY}]}>
+        <TouchableOpacity onPress={() => router.push('/(tabs)/Home')}style ={[styles.button, {backgroundColor:Colors.PRIMARY}]}>
         <Text style={{fontFamily:'appFontSemiBold', textAlign:'center', fontSize:15, color:'white'}}>Skip</Text>
-      </View>
+      </TouchableOpacity>
       </View>
     <StatusBar hidden/>
     </View>
@@ -160,7 +160,8 @@ const onPress = useCallback(async () => {
 const styles = StyleSheet.create({
   container:{
     backgroundColor: Colors.PRIMARY,
-    height: '100%'
+    height: '100%',
+    
   },
   heading: {
     color:Colors.WHITE,
