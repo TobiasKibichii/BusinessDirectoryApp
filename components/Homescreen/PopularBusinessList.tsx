@@ -12,7 +12,10 @@ export type BusinessType ={
   premium:boolean,
   category:categoryType,
   images:ImageType[],
-  id:number
+  description:string,
+  id:number,
+  phone:number,
+  website:string
 }
 
 type ImageType = {

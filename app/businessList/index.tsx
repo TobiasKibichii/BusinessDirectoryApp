@@ -48,7 +48,8 @@ export default function BusinessList() {
         width:'200%',
         height:150,
         backgroundColor:Colors.PRIMARY,
-        position:'absolute'
+        position:'absolute',
+        
       }}>
 
       </View>
@@ -57,8 +58,12 @@ export default function BusinessList() {
         flex:1,
         flexDirection:'row',
         alignItems:'center',
+        justifyContent:'center'
+        
       }}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity onPress={() => router.back()}
+           style={{position:'absolute', left:0}}
+          >
           <AntDesign name="rollback" size={24} color="white" />
         </TouchableOpacity>
         <Text
@@ -67,7 +72,8 @@ export default function BusinessList() {
             fontSize:25,
             textAlign:'center',
             padding:20,
-            color:'yellow'
+            color:'yellow',
+          
           }}
         >{categoryName} Business List</Text>
       </View>
