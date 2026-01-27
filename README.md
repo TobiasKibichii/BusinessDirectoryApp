@@ -26,11 +26,4 @@ Unlike a traditional setup, this project leverages <strong>Clerk not only for au
   <li>🔍 Search & Explore — Discover businesses across categories with real-time filtering.</li>
 </ul>
 
-<p><strong>🧠 What This Project Demonstrates</strong></p>
-<ul>
-  <li>🔐 Advanced use of Clerk beyond authentication</li>
-  <li>🏗️ Data modeling using identity-driven architectures</li>
-  <li>📱 Building scalable mobile apps with React Native & Expo</li>
-  <li>🔗 Managing complex component relationships (users, businesses, categories)</li>
-  <li>🎯 Designing systems that reduce backend complexity while remaining extensible</li>
-</ul>
+
