@@ -10,10 +10,10 @@ Unlike a traditional setup, this project leverages <strong>Clerk not only for au
 <p><strong>💻 Tech Stack</strong></p>
 <ul>
   <li>📱 Frontend: React Native (Expo)</li>
-  <li>🧠 Identity & Data Layer: Clerk (users, businesses, categories)</li>
-  <li>🗄️ Backend: RESTful APIs</li>
-  <li>🗃️ Database: SQL (XAMPP – local development)</li>
-  <li>⚛️ State Management: React Hooks</li>
+<li> <img src="https://cdn.worldvectorlogo.com/logos/strapi-2.svg" alt="Strapi Logo" width="16" /> Backend (Headless CMS):  Strapi – Managed users, businesses, categories, favorites, and custom lists via auto-generated REST APIs</li>
+<li>🗄️ API Layer: Strapi RESTful endpoints consumed by the mobile app</li>
+<li>🗃️ Database: MySQL (XAMPP – local development)</li>
+<li>⚛️ State Management: React Hooks</li>
 </ul>
 
 <p><strong>⚙️ Core Functionalities</strong></p>
