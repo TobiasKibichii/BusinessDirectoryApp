@@ -27,3 +27,20 @@ Unlike a traditional setup, this project leverages <strong>Clerk not only for au
 </ul>
 
 
+<p><strong>🖼️ Screenshots</strong></p>
+
+   <p>Landing Page </p>
+  <img src="screenshots/landingpage.png" alt="Landing Page" title ='LandingPage' style="width:400px;" />
+   <p>Home Page </p>
+  <img src="screenshots/homepage.png" alt="homepage " title ='homepage' style="width:400px; " />
+   <p>Explore Page</p>
+  <img src="screenshots/searchpage.png" alt="searchage" title ='searchpage' style="width:400px; " />
+   <p> Favorite Page </p>
+  <img src="screenshots/favoritespage.png" alt="favorite page" title ='favorite page' style="width:400px; " />
+   <p>Business Category Page</p>
+  <img src="screenshots/businesscategorypage.png" alt="Business Category Page" title ='Business Category Page' style="width:400px; " />
+   <p> Business Detail Page </p>
+  <img src="screenshots/businessdetailpage.png" alt="Business Detail Page " title ='Business Detail Page ' style="width:400px; " />
+   <p> Profile Page </p>
+  <img src="screenshots/profilepage.png" alt="Profile Page " title ='Profile Page' style="width:400px; " />
+
