@@ -3,9 +3,10 @@ import { BusinessType } from "@/components/Homescreen/PopularBusinessList";
 import Colors from "@/services/Colors";
 import { axiosClient } from "@/services/GlobalApi";
 import { useUser } from "@clerk/clerk-expo";
-import axios from "axios";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 type business = {
   business: BusinessType;
@@ -15,6 +16,7 @@ export default function Favorite() {
   const { user } = useUser();
   const [businessList, setBusinessList] = useState<BusinessType[]>([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     GetUserFavBusinessList();
@@ -23,7 +25,7 @@ export default function Favorite() {
   const GetUserFavBusinessList = async () => {
     setLoading(false);
     const response = await axiosClient.get(
-      "/user-favorites?filtrs[email][$eq]=" +
+      "/user-favorites?filters[userEmail][$eq]=" +
         user?.primaryEmailAddress?.emailAddress,
     );
     console.log(response?.data.data);
@@ -58,15 +60,37 @@ export default function Favorite() {
           position: "absolute",
         }}
       ></View>
-      <Text
+
+      <View
         style={{
-          fontFamily: "appFontBold",
-          fontSize: 25,
-          color: Colors.YELLOW,
+          flex: 1,
+          flexDirection: "row",
+          gap: 5,
+          alignItems: "center",
+          marginBottom: 50,
+          justifyContent: "center",
+          marginTop: 20,
         }}
       >
-        User Favorites
-      </Text>
+        <TouchableOpacity
+          onPress={() => router.back()}
+          style={{ position: "absolute", left: 0 }}
+        >
+          <AntDesign name="rollback" size={24} color={Colors.YELLOW} />
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontFamily: "appFontBold",
+            fontSize: 25,
+            color: Colors.YELLOW,
+            textAlign: "center",
+          }}
+        >
+          User Favorites
+        </Text>
+      </View>
+
       <FlatList
         data={businessList}
         showsVerticalScrollIndicator={false}
